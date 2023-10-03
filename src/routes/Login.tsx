@@ -1,4 +1,7 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
@@ -44,13 +47,7 @@ export default function Login() {
 
     try {
       setIsLoading(true);
-
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
+      signInWithEmailAndPassword(auth, email, password);
       navigator('/');
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -58,6 +55,14 @@ export default function Login() {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const onClick = async () => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -88,6 +93,10 @@ export default function Login() {
         Don't have an account?{' '}
         <Link to="/create-account">Create one &rarr;</Link>
       </Switcher>
+      <div>
+        Did you forget your password?
+        <button onClick={onClick}></button>
+      </div>
       <GithubButton />
     </Wrapper>
   );
