@@ -47,7 +47,7 @@ export default function Login() {
 
     try {
       setIsLoading(true);
-      signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigator('/');
     } catch (err) {
       if (err instanceof FirebaseError) {
