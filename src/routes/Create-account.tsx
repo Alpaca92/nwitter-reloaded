@@ -13,10 +13,6 @@ import {
 } from '../components/Auth-components';
 import GithubButton from '../components/Github-btn';
 
-const errors = {
-  'auth/email-already-in-use': 'That email already exists.',
-};
-
 export default function CreateAccount() {
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
